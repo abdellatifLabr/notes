@@ -629,6 +629,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .decorators import verify_hmac
+from .datamodels import OrderDataModel
+from .models import Order
+
+def sync_order(data: OrderDataModel) -> Order:
+  order = Order()
+  order.order_id = data.id
+  ...
+  return order
 
 @require_POST
 @csrf_exempt
@@ -638,15 +646,27 @@ def orders_create(request: HttpRequest) -> HttpResponse:
     data = convert_to_dataclass(OrderDataModel, payload)
 
     # Transform Order dataclass to Django Order Model
-    order = sync_order(data, save=False)
+    order = sync_order(data)
     order.save()
 
     return HttpResponse(status=200)
 ```
 ### Verify using mypy
 We will use _mypy_ to make sure that typing is correct, and most importantly check if there's some `Optional` fields mapped into a `NOT_NULL` database column.
+Make sure `django-stubs` library is installed and configured
+```
+[mypy]
+mypy_path = ./demo
+plugins =
+    mypy_django_plugin.main
+
+strict_optional = True
+
+[mypy.plugins.django-stubs]
+django_settings_module = demo.settings
+```
 Just run the following command direclty.
 ```bash
-$ mypy views.py
+$ mypy .
 ```
 Or setup project wise mypy type checking.
