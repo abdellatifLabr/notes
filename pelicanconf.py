@@ -15,6 +15,8 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+THEME="simple"
+
 # Blogroll
 LINKS = (
     ("Pelican", "https://getpelican.com/"),
