@@ -1,3 +1,9 @@
+---
+Title: My First Review
+Date: 2024-03-26 13:11
+Category: Integrations
+---
+
 # Type safe data sync
 Sync data from 3rd party services safely using python _dataclass_ and _mypy_.
 in this example, we will use Shopify order model to demonstrate our method.
@@ -5,6 +11,7 @@ in this example, we will use Shopify order model to demonstrate our method.
 ## Steps
 ### Building the Order dataclass
 Using a natural language model, you can convert this huge json payload received from Shopify's `order/create` webhook into an `Order` dataclass
+
 ```json
 {
   "id": 820982911946154508,
@@ -437,7 +444,9 @@ Using a natural language model, you can convert this huge json payload received 
   ]
 }
 ```
+
 Will be converted to this
+
 ```python
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict
@@ -603,8 +612,10 @@ class Order:
     shipping_address: Address
     shipping_lines: List[ShippingLine]
 ```
+
 ### Converter function
 Converter function transforms the received json payload into an instance of the `Order` dataclass. This function ensures that nested data is mapped correclty without the need to go through each field manually.
+
 ```python
 from typing import TypeVar
 
@@ -621,8 +632,10 @@ def convert_to_dataclass(dataclass_type: T, data) -> T:
         }
     )
 ```
+
 ### Using the converter function
 Let's a Django vies to handle the `order/create` webhook
+
 ```python
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -651,9 +664,11 @@ def orders_create(request: HttpRequest) -> HttpResponse:
 
     return HttpResponse(status=200)
 ```
+
 ### Verify using mypy
 We will use _mypy_ to make sure that typing is correct, and most importantly check if there's some `Optional` fields mapped into a `NOT_NULL` database column.
 Make sure `django-stubs` library is installed and configured
+
 ```
 [mypy]
 mypy_path = ./demo
@@ -665,8 +680,11 @@ strict_optional = True
 [mypy.plugins.django-stubs]
 django_settings_module = demo.settings
 ```
+
 Just run the following command direclty.
+
 ```bash
 $ mypy .
 ```
+
 Or setup project wise mypy type checking.
