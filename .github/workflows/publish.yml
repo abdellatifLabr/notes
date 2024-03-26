@@ -28,7 +28,7 @@ jobs:
         run: python -m pelican content
       
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
           name: website
           path: output
@@ -46,6 +46,6 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v1
         with:
           artifact_name: website
