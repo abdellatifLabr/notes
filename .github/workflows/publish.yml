@@ -25,7 +25,7 @@ jobs:
           pip install "pelican[markdown]"
           
       - name: Generate site
-        run: python -m pelican content
+        run: python -m pelican content -s publishconf.py
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
