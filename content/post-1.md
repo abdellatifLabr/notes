@@ -1,3 +1,9 @@
+---
+Title: My First Review - edited
+Date: 2010-12-03 10:20
+Category: Review
+---
+
 # Type safe data sync
 Sync data from 3rd party services safely using python _dataclass_ and _mypy_.
 in this example, we will use Shopify order model to demonstrate our method.
