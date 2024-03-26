@@ -2,6 +2,7 @@
 Title: My First Review - edited
 Date: 2010-12-03 10:20
 Category: Review
+Summary: Short version for index and feeds
 ---
 
 # Type safe data sync
